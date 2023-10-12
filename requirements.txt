@@ -1,3 +1,4 @@
+aiohttp
 intake
 numpy
 requests

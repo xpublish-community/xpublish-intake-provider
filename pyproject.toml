@@ -22,13 +22,8 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
 ]
 dynamic = [
+  "dependencies",
   "version",
-]
-dependencies = [
-  "intake",
-  "numpy",
-  "requests",
-  "xpublish",
 ]
 [project.urls]
 homepage = "https://github.com/xpublish-community/xpublish-intake-provider"
@@ -38,6 +33,9 @@ repository = "https://github.com/xpublish-community/xpublish-intake-provider"
 packages = ["xpublish_intake_provider"]
 zip-safe = false
 include-package-data = true
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }
 
 [tool.setuptools_scm]
 write_to = "xpublish_intake_provider/_version.py"
