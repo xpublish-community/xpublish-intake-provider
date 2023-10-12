@@ -20,6 +20,7 @@ pip install xpublish_intake_provider
 
 Currently this package includes one plugin which can load an
 Intake catalog and serve it's datasets via `/datasets/{dataset_id}`.
+
 You can register the plugin multiple times in order to serve
 multiple catalogs as long as each gets its own name.
 
@@ -28,10 +29,19 @@ from xpublish_intake_provider import IntakeDatasetProviderPlugin
 
 rest = xpublish.Rest({})
 
-rest.register_plugin(IntakeDatasetProviderPlugin(name="gfs-datasets", uri="https://raw.githubusercontent.com/axiom-data-science/mc-goods/main/mc_goods/gfs-1-4deg.yaml"))
-rest.register_plugin(IntakeDatasetProviderPlugin(name="gomofs-datasets", uri="https://raw.githubusercontent.com/axiom-data-science/mc-goods/main/mc_goods/gomofs.yaml"))
+rest.register_plugin(
+    IntakeDatasetProviderPlugin(
+        name="gfs-datasets",
+        uri="https://raw.githubusercontent.com/axiom-data-science/mc-goods/main/mc_goods/gfs-1-4deg.yaml"
+    )
+)
+rest.register_plugin(
+    IntakeDatasetProviderPlugin(
+        name="gomofs-datasets",
+        uri="https://raw.githubusercontent.com/axiom-data-science/mc-goods/main/mc_goods/gomofs.yaml"
+    )
+)
 ```
-
 
 ## Get in touch
 
