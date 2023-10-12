@@ -72,6 +72,12 @@ convention = "google"
 # Allow fastapi.Depends and other dependency injection style function arguments
 extend-immutable-calls = ["fastapi.Depends", "fastapi.Query"]
 
+[tool.check-manifest]
+ignore = [
+  "xpublish_intake_provider/_version.py",
+  "xpublish_intake_provider/**/__pycache__/*.pyc"
+]
+
 [tool.interrogate]
 ignore-init-method = true
 ignore-init-module = false
