@@ -1,2 +1,4 @@
+intake
 numpy
 requests
+xpublish
