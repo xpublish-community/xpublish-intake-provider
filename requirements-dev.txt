@@ -1,5 +1,6 @@
 black
 check-manifest
+httpx
 interrogate
 jupyter
 myst-parser

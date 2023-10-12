@@ -1,5 +1,5 @@
-name: Publish to PyPI
-
+# https://github.com/pypa/gh-action-pypi-publish
+name: Publish Python 🐍 distributions 📦 to PyPI and TestPyPI
 on:
   pull_request:
   push:
@@ -8,46 +8,52 @@ on:
   release:
     types:
       - published
-
 jobs:
-  packages:
+  build-n-publish:
+    name: Build and publish Python 🐍 distributions 📦 to PyPI and TestPyPI
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write # IMPORTANT: this permission is mandatory for trusted publishing
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.x"
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
 
-    - name: Get tags
-      run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
-      shell: bash
+      # - name: Get tags
+      #   run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
 
-    - name: Install build tools
-      run: |
-        python -m pip install --upgrade pip build
+      - name: Install build tools
+        run: |
+          python -m pip install --upgrade build
 
-      shell: bash
+      - name: Build binary wheel
+        run: python -m build --sdist --wheel . --outdir dist
 
-    - name: Build binary wheel
-      run: python -m build --sdist --wheel . --outdir dist
+      - name: CheckFiles
+        run: >
+          ls dist
+          && python -m pip install --upgrade check-manifest
+          && check-manifest --verbose
 
-    - name: CheckFiles
-      run: |
-        ls dist
-      shell: bash
+      - name: Test wheels
+        run: >
+          cd dist
+          && python -m pip install *.whl
+          && python -m pip install --upgrade build twine
+          && python -m twine check *
 
-    - name: Test wheels
-      run: |
-        cd dist && python -m pip install *.whl
-        python -m pip install --upgrade twine
-        python -m twine check *
-      shell: bash
+      # Skipping Test PyPI due to issues with setuptools_scm
+      # see https://github.com/xpublish-community/xpublish-opendap/issues/10
+      # - name: Publish distribution 📦 to Test PyPI
+      #   uses: pypa/gh-action-pypi-publish@release/v1
+      #   with:
+      #     repository-url: https://test.pypi.org/legacy/
 
-    - name: Publish a Python distribution to PyPI
-      if: success() && github.event_name == 'release'
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        user: __token__
-        password: ${{ secrets.PYPI_PASSWORD }}
+      - name: Publish a Python distribution to PyPI
+        if: success() && github.event_name == 'release'
+        uses: pypa/gh-action-pypi-publish@release/v1
