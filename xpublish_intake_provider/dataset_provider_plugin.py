@@ -3,6 +3,7 @@
 Loads datasets from a single intake catalog
 via the regular `deps.dataset` interface.
 """
+
 from pathlib import Path
 from typing import Union
 
