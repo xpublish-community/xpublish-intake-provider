@@ -1,7 +1,7 @@
 repos:
 
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.6.0
+  rev: v6.0.0
   hooks:
     - id: trailing-whitespace
       exclude: tests/data
@@ -22,41 +22,41 @@ repos:
       args: [--config=pyproject.toml]
 
 - repo: https://github.com/keewis/blackdoc
-  rev: v0.3.9
+  rev: v0.4.6
   hooks:
     - id: blackdoc
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.6.3
+  rev: v0.16.6
   hooks:
     - id: ruff
       args: [--fix, --exit-non-zero-on-fix]
 
-- repo: https://github.com/psf/black
-  rev: 24.8.0
+- repo: https://github.com/psf/black-pre-commit-mirror
+  rev: 26.5.1
   hooks:
   - id: black
     language_version: python3
 
 - repo: https://github.com/codespell-project/codespell
-  rev: v2.3.0
+  rev: v2.4.3
   hooks:
     - id: codespell
       args:
         - --quiet-level=2
 
 - repo: https://github.com/asottile/add-trailing-comma
-  rev: v3.1.0
+  rev: v4.0.0
   hooks:
     - id: add-trailing-comma
 
 - repo: https://github.com/tox-dev/pyproject-fmt
-  rev: "2.2.1"
+  rev: "v2.29.3"
   hooks:
     - id: pyproject-fmt
 
 - repo: https://github.com/aio-libs/sort-all
-  rev: "v1.2.0"
+  rev: "v1.3.0"
   hooks:
     - id: sort-all
       types: [file, python]
